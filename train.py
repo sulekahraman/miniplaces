@@ -28,23 +28,23 @@ def accuracy(output, target, topk=(1,)):
     return res
 
 
-def acc1(data_loader, model, device):
-    correct = 0
-    total = 0
-    with torch.no_grad():            
-        for data in data_loader:
-            inputs, labels = data
-            inputs = inputs.to(device) #get the inputs and labels
-            labels = labels.to(device)
-            outputs = model(inputs)
-            _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+# def acc1(data_loader, model, device):
+#     correct = 0
+#     total = 0
+#     with torch.no_grad():            
+#         for data in data_loader:
+#             inputs, labels = data
+#             inputs = inputs.to(device) #get the inputs and labels
+#             labels = labels.to(device)
+#             outputs = model(inputs)
+#             _, predicted = torch.max(outputs.data, 1)
+#             total += labels.size(0)
+#             correct += (predicted == labels).sum().item()
 
-    acc = 100 * correct / total
-    err = 1 - acc
-    print('Accuracy of the network on the training data: %d %%' % (acc))
-    return acc
+#     acc = 100 * correct / total
+#     err = 1 - acc
+#     print('Accuracy of the network on the training data: %d %%' % (acc))
+#     return acc
 
 
 def validate(val_loader, model, criterion, device):
@@ -183,7 +183,14 @@ def run():
         #             ))
         #         running_loss = 0.0
         #         gc.collect()
+        print("Epoch: ", epoch)
 
+        print("Training acc - Top 1: ", train_top1)
+        print("Training acc - Top 2: ", train_top5)
+
+        print("val_accuracy1: ", val_top1)
+        print("val_accuracy5: ", val_top5)
+        print("--------------------------------")
         gc.collect()
         # save after every epoch
         torch.save(model.state_dict(), "models/model.%d" % epoch)
@@ -192,16 +199,15 @@ def run():
         # on training and validation datasets here
        
         # Training Set
-        train_accuracy1 = acc1(train_loader, model, device)
-        train_accuracy5 = acc5(train_loader, model, device)
+        # train_accuracy1 = acc1(train_loader, model, device)
+        # train_accuracy1 = accuracy(output, target, topk=(1,)):
+        # train_accuracy5 = acc5(train_loader, model, device)
 
-        #Validation Set
-        val_accuracy1 = acc1(val_loader, model, device)
-        val_accuracy5 = acc5(val_loader, model, device)
+        # #Validation Set
+        # val_accuracy1 = acc1(val_loader, model, device)
+        # val_accuracy5 = acc5(val_loader, model, device)
 
-
-
-
+        
 
 
         gc.collect()

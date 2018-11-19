@@ -158,7 +158,7 @@ def run():
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
     optimizer = optim.SGD(model.parameters(), lr=0.1)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler(optimizer,lambda x:0.1*x)
+    scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4

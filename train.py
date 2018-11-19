@@ -158,7 +158,7 @@ def run():
     epoch = 1
     while epoch <= num_epochs:
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
-        val_top1, val_top5 = validate(val_loader, model. criterion, device)
+        val_top1, val_top5 = validate(val_loader, model, criterion, device)
         # running_loss = 0.0
         # for param_group in optimizer.param_groups:
         #     print('Current learning rate: ' + str(param_group['lr']))
@@ -185,11 +185,11 @@ def run():
         #         gc.collect()
         print("Epoch: ", epoch)
 
-        print("Training acc - Top 1: ", train_top1)
-        print("Training acc - Top 2: ", train_top5)
+        print("Training Top-1 Accuracy: ", train_top1)
+        print("Training Top-5 Accuracy: ", train_top5)
 
-        print("val_accuracy1: ", val_top1)
-        print("val_accuracy5: ", val_top5)
+        print("Validation Top-1 Accuracy: ", val_top1)
+        print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
         gc.collect()
         # save after every epoch

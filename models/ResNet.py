@@ -127,6 +127,10 @@ class ResNet(nn.Module):
 
         output = self.avgpool(output)
         output = output.view(x.size(0), -1)
+
+        ####
+        ## TODO: add dropout layer here perhaps 
+        ####
         output = self.fc(output)
 
         return output

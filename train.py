@@ -140,7 +140,9 @@ def run():
     criterion = nn.CrossEntropyLoss().to(device)
     # TODO: optimizer is currently unoptimized
     # there's a lot of room for improvement/different optimizers
-    optimizer = optim.SGD(model.parameters(), lr=1e-3)
+    # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
+    # also try to change the learning rate 
+    optimizer = optim.SGD(model.parameters(), lr=1e-3) 
 
     epoch = 1
     while epoch <= num_epochs:

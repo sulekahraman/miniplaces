@@ -111,8 +111,9 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
         optimizer.step()
         running_loss += loss.item()
         acc1, acc5 = accuracy(outputs.data, labels.data, topk=(1, 5))
-        total_acc1 += acc1[0].item()
-        total_acc5 += acc5[0].item()
+        print("acc11", acc1)
+        total_acc1 += acc1[0]
+        total_acc5 += acc5[0]
 
 
         if batch_num % output_period == 0:

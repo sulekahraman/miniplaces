@@ -49,6 +49,8 @@ def accuracy(output, target, topk=(1,)):
 
 
 def validate(val_loader, model, criterion, device):
+    output_period = 100
+    batch_size = 100    
     num_val_batches = len(val_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -138,7 +140,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #top-5 score, you check if the target label is one of your top 5 predictions (the 5 ones with the highest probabilities).
 
 #the top score is computed as the times a predicted label matched the target label, divided by the number of data-points evaluated.      
-
+    print("num_train_batches", num_train_batches)
+    print("inputs.size(0):", inputs.size(0))
     top1 = total_acc1/num_train_batches
     top5 = total_acc5/num_train_batches
 

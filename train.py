@@ -150,7 +150,7 @@ def run():
     epoch = 1
     while epoch <= num_epochs:
         # load pre-trained model
-        model = model.load_state_dict(torch.load("models/model." + str(epoch)))
+        model.load_state_dict(torch.load("models/model." + str(epoch)))
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 

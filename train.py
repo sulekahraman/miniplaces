@@ -74,7 +74,7 @@ def validate(val_loader, model, criterion, device, epoch):
    
 
 
-def train(train_loader, model, criterion, optimizer, epoch, device,scheduler):
+def train(train_loader, model, criterion, optimizer, epoch, device):
 
     output_period = 100
     batch_size = 100
@@ -175,9 +175,11 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-        model.load_state_dict(torch.load("models/model." + str(epoch)))
+        if epoch ==20 or epoch == 25:
+            scheduler.step()
+        #model.load_state_dict(torch.load("models/model." + str(epoch)))
         model = model.to(device)
-        train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device,scheduler)
+        train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
         print("Epoch: ", epoch)
@@ -201,16 +203,16 @@ def run():
         gc.collect()
         epoch += 1
 
-    with open('output/dropout/train_top1.json', 'w') as out1:
-        json.dump(train_t1, out1)
+    # with open('output/dropout/train_top1.json', 'w') as out1:
+    #     json.dump(train_t1, out1)
     with open('output/dropout/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
     with open('output/dropout/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
-    with open('output/dropout/val_top1.json', 'w') as out4:
-        json.dump(val_t1, out4)
-    with open('output/dropout/loss.json', 'w') as out5:
-        json.dump(loss_ep, out5)
+    # with open('output/dropout/val_top1.json', 'w') as out4:
+    #     json.dump(val_t1, out4)
+    # with open('output/dropout/loss.json', 'w') as out5:
+    #     json.dump(loss_ep, out5)
 
 print('Starting training')
 run()

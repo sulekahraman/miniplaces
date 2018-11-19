@@ -129,11 +129,14 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     return (top1, top5)
 
 def adjust_learning_rate(optimizer, epoch):
-    global state
+    
     gamma = 2
-    state['lr'] *= gamma
+    #state['lr'] *= gamma
     for param_group in optimizer.param_groups:
-        param_group['lr'] = state['lr']
+        lr = param_group['lr']
+    lr = lr*gamma
+    for param_group in optimizer.param_groups:
+	param_group['lr'] = lr 
 
 def run():
     # Parameters

@@ -81,6 +81,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     loss_ep[epoch] = 0.0 
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
+        lr = param_group['lr']
     # model.train() #comment this out if you're training sth new
     
 
@@ -111,7 +112,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
                 # total_acc1/num_train_batches,
                 # total_acc5/num_train_batches
                 ))
-            loss_ep[epoch] += running_loss
+            loss_ep[lr] += running_loss
 
             running_loss = 0.0
             gc.collect()
@@ -129,6 +130,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 
 def adjust_learning_rate(optimizer, epoch):
     global state
+    gamma = 2
     state['lr'] *= gamma
     for param_group in optimizer.param_groups:
         param_group['lr'] = state['lr']
@@ -161,8 +163,9 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-        model.load_state_dict(torch.load("models/model." + str(epoch)))
-        model = model.to(device)
+        # model.load_state_dict(torch.load("models/diff_lr/model." + str(epoch)))
+        # model = model.to(device)
+        adjust_learning_rate(optimizer, epoch)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 
@@ -179,7 +182,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        # torch.save(model.state_dict(), "models/model.%d" % epoch)
+        torch.save(model.state_dict(), "models/diff_lr/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here

@@ -3,4 +3,15 @@ Useful links:
  - https://github.com/bearpaw/pytorch-classification/blob/master/imagenet.py
  - https://github.com/bearpaw/pytorch-classification/blob/master/utils/misc.py
  
+ Nohup instructions:
+ - https://sites.google.com/a/kossboss.com/main/linux---move-running-to-process-nohup
  
+Using the Job Control of bash to send the process into the background:
+
+0. Run some SOMECOMMAND
+1. ctrl+z to stop (pause) the program and get back to the shell
+2. bg to run it in the background
+3. disown -h so that the process isn't killed when the terminal closes
+4. Type exit to get out of the shell because now your good to go as the operation will run in the background in it own process so its not tied to a shell
+
+This process is the equivalent of running nohup SOMECOMMAND

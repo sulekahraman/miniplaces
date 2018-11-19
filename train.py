@@ -141,6 +141,7 @@ def run():
     criterion = nn.CrossEntropyLoss().to(device)
     # TODO: optimizer is currently unoptimized
     # there's a lot of room for improvement/different optimizers
+    optimizer = optim.SGD(model.parameters(), lr=1e-3)
     train_t1 = dict()
     train_t5 = dict()
     val_t1 = dict()

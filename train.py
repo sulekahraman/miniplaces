@@ -136,8 +136,9 @@ def adjust_learning_rate(optimizer, epoch):
         lr = param_group['lr']
     lr = lr*gamma
     for param_group in optimizer.param_groups:
-	param_group['lr'] = lr 
+        param_group['lr'] = lr 
 
+#scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
     num_epochs = 10

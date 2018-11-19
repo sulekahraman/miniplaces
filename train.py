@@ -78,6 +78,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     total_acc1 = 0.0
     total_acc5 = 0.0
     running_loss = 0.0
+    loss_ep[epoch] = 0.0 
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
     # model.train() #comment this out if you're training sth new
@@ -110,6 +111,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
                 # total_acc1/num_train_batches,
                 # total_acc5/num_train_batches
                 ))
+            loss_ep[epoch] += running_loss
+
             running_loss = 0.0
             gc.collect()
 
@@ -120,9 +123,15 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #the top score is computed as the times a predicted label matched the target label, divided by the number of data-points evaluated.      
     top1 = total_acc1*1.0/num_train_batches
     top5 = total_acc5*1.0/num_train_batches
+    loss_ep[epoch] = loss_ep[epoch]/num_train_batches
 
     return (top1, top5)
 
+def adjust_learning_rate(optimizer, epoch):
+    global state
+    state['lr'] *= gamma
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = state['lr']
 
 def run():
     # Parameters
@@ -146,6 +155,7 @@ def run():
     train_t5 = dict()
     val_t1 = dict()
     val_t5 = dict()
+    global loss_ep = dict()
 
     epoch = 1
     while epoch <= num_epochs:
@@ -177,14 +187,16 @@ def run():
         gc.collect()
         epoch += 1
 
-    with open('output/train_top1.json', 'w') as out:
-        json.dump(train_t1)
-    with open('output/train_top5.json', 'w') as out:
-        json.dump(train_t5)
-    with open('output/val_top5.json', 'w') as out:
-        json.dump(val_t5)
-    with open('output/val_top1.json', 'w') as out:
-        json.dump(val_t1)
+    with open('output/train_top1.json', 'w') as out1:
+        json.dump(train_t1, out1)
+    with open('output/train_top5.json', 'w') as out2:
+        json.dump(train_t5, out2)
+    with open('output/val_top5.json', 'w') as out3:
+        json.dump(val_t5, out3)
+    with open('output/val_top1.json', 'w') as out4:
+        json.dump(val_t1, out4)
+    with open('output/loss.json', 'w') as out5:
+        json.dump(loss_ep, out5)
 
 print('Starting training')
 run()

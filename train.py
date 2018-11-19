@@ -143,7 +143,7 @@ def run():
     # changed to Adam
     # lr 
 
-    optimizer = optim.SVD(model.parameters(), lr=1e-3)
+    optimizer = optim.SGD(model.parameters(), lr=1e-3)
 
     # make sure to verify overfitting
     epoch = 1

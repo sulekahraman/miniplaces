@@ -72,7 +72,7 @@ def validate(val_loader, model, criterion, device, epoch):
             if batch_num % output_period == 0:
                 print('[%d:%.2f] loss: %.3f acc1: %.4f acc5: %.4f ' % (
                     epoch, 
-                    batch_num*1.0/num_train_batches,
+                    batch_num*1.0/num_val_batches,
                     running_loss/output_period,
                     acc1,
                     acc5

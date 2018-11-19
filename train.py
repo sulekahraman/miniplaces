@@ -25,7 +25,7 @@ def accuracy(output, target, topk=(1,)):
         for k in topk:
             correct_k = correct[:k].view(-1).float().sum(0)
             res.append(correct_k.mul_(100.0 / batch_size))
-    print("RESS", res)
+    #print("RESS", res)
     return res
 
 
@@ -64,8 +64,8 @@ def validate(val_loader, model, criterion, device):
 
             running_loss += loss.item()
             acc1, acc5 = accuracy(outputs.data, labels.data, topk=(1, 5))
-            total_acc1 += acc1[0].item()
-            total_acc5 += acc5[0].item()
+            total_acc1 += acc1.item()
+            total_acc5 += acc5.item()
 
             if batch_num % output_period == 0:
                 print('[%d:%.2f] loss: %.3f acc1: %.4f acc5: %.4f ' % (
@@ -111,9 +111,13 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
         optimizer.step()
         running_loss += loss.item()
         acc1, acc5 = accuracy(outputs.data, labels.data, topk=(1, 5))
-        print("acc11", acc1)
-        total_acc1 += acc1[0]
-        total_acc5 += acc5[0]
+        
+
+
+
+
+        total_acc1 += acc1.item()
+        total_acc5 += acc5.item()
 
 
         if batch_num % output_period == 0:

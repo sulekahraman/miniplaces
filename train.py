@@ -12,7 +12,7 @@ from models.AlexNet import *
 from models.ResNet import *
 
 import json
-
+loss_ep = dict()
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     with torch.no_grad():
@@ -157,7 +157,7 @@ def run():
     train_t5 = dict()
     val_t1 = dict()
     val_t5 = dict()
-    global loss_ep = dict()
+    
 
     epoch = 1
     while epoch <= num_epochs:

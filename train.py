@@ -152,6 +152,7 @@ def run():
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
         model.load_state_dict(torch.load("models/model." + str(epoch)))
+        model = model.to(device)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 

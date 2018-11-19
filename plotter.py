@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-file=open("3rdrun_kout/output.txt","r")
+file=open("~/output.txt","r")
 x=[]
 y_val_1 = []
 y_train_1 = []

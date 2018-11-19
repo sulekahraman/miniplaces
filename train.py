@@ -48,7 +48,7 @@ def accuracy(output, target, topk=(1,)):
 #     return acc
 
 
-def validate(val_loader, model, criterion, device):
+def validate(val_loader, model, criterion, device, epoch):
     output_period = 100
     batch_size = 100    
     num_val_batches = len(val_loader)
@@ -170,7 +170,7 @@ def run():
     epoch = 1
     while epoch <= num_epochs:
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
-        val_top1, val_top5 = validate(val_loader, model, criterion, device)
+        val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
         # running_loss = 0.0
         # for param_group in optimizer.param_groups:
         #     print('Current learning rate: ' + str(param_group['lr']))

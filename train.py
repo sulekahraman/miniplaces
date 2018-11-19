@@ -169,7 +169,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/model.%d" % epoch)
+        # torch.save(model.state_dict(), "models/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here

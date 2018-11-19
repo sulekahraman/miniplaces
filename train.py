@@ -63,8 +63,8 @@ def validate(val_loader, model, criterion, device, epoch):
                     ))
                 running_loss = 0.0
                 gc.collect()
-    top1 = total_acc1/num_val_batches
-    top5 = total_acc5/num_val_batches
+    top1 = total_acc1*1.0/num_val_batches
+    top5 = total_acc5*1.0/num_val_batches
     print("Accuracies on validation set: Top-1: " + str(top1) + " Top-5: " + str(top5))
     return (top1, top5)
    
@@ -80,7 +80,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     running_loss = 0.0
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
-    model.train()
+    # model.train()
+    
 
     for batch_num, (inputs, labels) in enumerate(train_loader, 1):
         inputs = inputs.to(device) #get the inputs and labels
@@ -117,8 +118,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #top-5 score, you check if the target label is one of your top 5 predictions (the 5 ones with the highest probabilities).
 
 #the top score is computed as the times a predicted label matched the target label, divided by the number of data-points evaluated.      
-    top1 = total_acc1/num_train_batches
-    top5 = total_acc5/num_train_batches
+    top1 = total_acc1*1.0/num_train_batches
+    top5 = total_acc5*1.0/num_train_batches
 
     return (top1, top5)
 
@@ -131,8 +132,8 @@ def run():
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_18()
-    model = model.to(device)
+    # model = resnet_18()
+    # model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
     # num_train_batches = len(train_loader)
@@ -141,55 +142,30 @@ def run():
     # TODO: optimizer is currently unoptimized
     # there's a lot of room for improvement/different optimizers
     optimizer = optim.SGD(model.parameters(), lr=1e-3)
+    train_t1 = dict()
+    train_t5 = dict()
+    val_t1 = dict()
+    val_t5 = dict()
 
     epoch = 1
     while epoch <= num_epochs:
-        train_t1 = dict()
-        train_t5 = dict()
-        val_t1 = dict()
-        val_t5 = dict()
+        # load pre-trained model
+        model = model.load_state_dict(torch.load("models/model." + str(epoch)))
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
-        # running_loss = 0.0
-        # for param_group in optimizer.param_groups:
-        #     print('Current learning rate: ' + str(param_group['lr']))
-        # model.train()
-
-        # for batch_num, (inputs, labels) in enumerate(train_loader, 1):
-        #     inputs = inputs.to(device) #get the inputs and labels
-        #     labels = labels.to(device)
-
-        #     optimizer.zero_grad() #zero the parameter gradients
-        #     outputs = model(inputs)
-        #     loss = criterion(outputs, labels)
-        #     loss.backward()
-
-        #     optimizer.step()
-        #     running_loss += loss.item()
-
-        #     if batch_num % output_period == 0:
-        #         print('[%d:%.2f] loss: %.3f' % (
-        #             epoch, batch_num*1.0/num_train_batches,
-        #             running_loss/output_period
-        #             ))
-        #         running_loss = 0.0
-        #         gc.collect()
-
 
         print("Epoch: ", epoch)
-
         print("Training Top-1 Accuracy: ", train_top1)
         print("Training Top-5 Accuracy: ", train_top5)
-
         print("Validation Top-1 Accuracy: ", val_top1)
         print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
+        #save the errors
+        train_t1[epoch] = 100 - train_top1
+        train_t5[epoch] = 100 - train_top5
+        val_t1[epoch] = 100 - val_top1
+        val_t5[epoch] = 100 - val_top5
 
-        train_t1[epoch] = train_top1
-        train_t5[epoch] = train_top5
-        val_t1[epoch] = val_top1
-        val_t5[epoch] = val_top5
-        gc.collect()
         # save after every epoch
         torch.save(model.state_dict(), "models/model.%d" % epoch)
 

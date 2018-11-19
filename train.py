@@ -13,6 +13,10 @@ from models.ResNet import *
 
 import json
 
+
+loss_ep = dict()
+
+
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     with torch.no_grad():
@@ -135,7 +139,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 def run():
     # Parameters
-    num_epochs = 10
+    num_epochs = 30
     output_period = 100
     batch_size = 100
 
@@ -152,13 +156,18 @@ def run():
     # there's a lot of room for improvement/different optimizers
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
-    # also try to change the learning rate 
-    optimizer = optim.SGD(model.parameters(), lr=1e-3) 
+    # also try to change the learning rate  
+    optimizer = optim.SGD(model.parameters(), lr=0.1)  #since adam is faster, might be better for lower epochs 
+    #scheduler takes optimizer as arguemnt, scheduler.step()
+    #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
+    #5e-4 for weight decay, or 1e-4
+    #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
+    #people use 0.9, safe value of momentum 
+
     train_t1 = dict()
     train_t5 = dict()
     val_t1 = dict()
     val_t5 = dict()
-    global loss_ep = dict()
 
 
     epoch = 1
@@ -191,15 +200,15 @@ def run():
         gc.collect()
         epoch += 1
 
-    with open('output/train_top1.json', 'w') as out1:
+    with open('output/dropout/train_top1.json', 'w') as out1:
         json.dump(train_t1, out1)
-    with open('output/train_top5.json', 'w') as out2:
+    with open('output/dropout/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/val_top5.json', 'w') as out3:
+    with open('output/dropout/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
-    with open('output/val_top1.json', 'w') as out4:
+    with open('output/dropout/val_top1.json', 'w') as out4:
         json.dump(val_t1, out4)
-    with open('output/loss.json', 'w') as out5:
+    with open('output/dropout/loss.json', 'w') as out5:
         json.dump(loss_ep, out5)
 
 print('Starting training')

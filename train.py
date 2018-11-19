@@ -80,7 +80,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     running_loss = 0.0
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
-    # model.train()
+    # model.train() #comment this out if you're training sth new
     
 
     for batch_num, (inputs, labels) in enumerate(train_loader, 1):
@@ -150,6 +150,7 @@ def run():
     epoch = 1
     while epoch <= num_epochs:
         # load pre-trained model
+        # Comment out the following line if you're training sth new!!
         model.load_state_dict(torch.load("models/model." + str(epoch)))
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)

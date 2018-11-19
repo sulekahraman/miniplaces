@@ -18,7 +18,7 @@ train_top5 = [value for (key, value) in sorted(train5.items())]
 val_top1 = [value for (key, value) in sorted(val1.items())]
 val_top5 = [value for (key, value) in sorted(val5.items())]
 
-x = arange(1, 11)
+x = arange(1, len(train_top1))
 plt.plot(x, train_top1, label = "Top-1 Training Error")  
 plt.plot(x, val_top1, label = "Top-1 Validation Error")
 plt.plot(x, train_top5, label = "Top-5 Training Error")

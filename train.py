@@ -72,7 +72,7 @@ def validate(val_loader, model, criterion, device, epoch):
    
 
 
-def train(train_loader, model, criterion, optimizer, epoch, device):
+def train(train_loader, model, criterion, optimizer, epoch, device,scheduler):
 
     output_period = 100
     batch_size = 100
@@ -158,7 +158,17 @@ def run():
     criterion = nn.CrossEntropyLoss().to(device)
     # TODO: optimizer is currently unoptimized
     # there's a lot of room for improvement/different optimizers
-    optimizer = optim.SGD(model.parameters(), lr=1e-3)
+
+    # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
+    # also try to change the learning rate  
+    optimizer = optim.SGD(model.parameters(), lr=0.1)  #since adam is faster, might be better for lower epochs 
+    scheduler = optim.lr_scheduler(optimizer,lambda x:0.1*x)
+    #scheduler takes optimizer as arguemnt, scheduler.step()
+    #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
+    #5e-4 for weight decay, or 1e-4
+    #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
+    #people use 0.9, safe value of momentum 
+
     train_t1 = dict()
     train_t5 = dict()
     val_t1 = dict()
@@ -169,12 +179,12 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-        # model.load_state_dict(torch.load("models/diff_lr/model." + str(epoch)))
-        # model = model.to(device)
-        adjust_learning_rate(optimizer, epoch)
-        train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
-        val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 
+        model.load_state_dict(torch.load("models/model." + str(epoch)))
+        model = model.to(device)
+        train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device,scheduler)
+        val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
+#huh
         print("Epoch: ", epoch)
         print("Training Top-1 Accuracy: ", train_top1)
         print("Training Top-5 Accuracy: ", train_top5)

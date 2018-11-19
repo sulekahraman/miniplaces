@@ -13,6 +13,8 @@ from models.ResNet import *
 
 import json
 loss_ep = dict()
+#resnet 50 is better, problem1 do more epochs >30.
+
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     with torch.no_grad():

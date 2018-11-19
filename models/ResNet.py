@@ -97,6 +97,7 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
 
         self.avgpool = nn.AvgPool2d(8)
+        #Modified for dropout layer 
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
         for m in self.modules():
@@ -116,6 +117,16 @@ class ResNet(nn.Module):
             self.in_planes = out_planes * block.expansion
         return nn.Sequential(*layers)
 
+    def _make_layer_with_dropout(self, block, out_planes, blocks, stride=1):
+        layers = []
+        layers.append(block(self.in_planes, out_planes, stride))
+        self.in_planes = out_planes * block.expansion
+        for i in range(1, blocks):
+            layers.append(block(self.in_planes, out_planes))
+            self.in_planes = out_planes * block.expansion
+        layers.append(nn.Dropout())
+        return nn.Sequential(*layers)
+
     def forward(self, x):
         output = self.Conv1(x)
         output = F.relu(self.BN1(output))
@@ -125,8 +136,15 @@ class ResNet(nn.Module):
         output = self.layer3(output)
         output = self.layer4(output)
 
+
+
         output = self.avgpool(output)
         output = output.view(x.size(0), -1)
+
+        ####
+        ## TODO: add dropout layer here perhaps 
+        ####
+
         output = self.fc(output)
 
         return output

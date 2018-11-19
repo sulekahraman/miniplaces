@@ -160,11 +160,11 @@ def run():
         print("Validation Top-1 Accuracy: ", val_top1)
         print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
-
-        train_t1[epoch] = train_top1
-        train_t5[epoch] = train_top5
-        val_t1[epoch] = val_top1
-        val_t5[epoch] = val_top5
+        #save the errors
+        train_t1[epoch] = 100 - train_top1
+        train_t5[epoch] = 100 - train_top5
+        val_t1[epoch] = 100 - val_top1
+        val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
         torch.save(model.state_dict(), "models/model.%d" % epoch)

@@ -1,37 +1,27 @@
 import matplotlib.pyplot as plt
-file=open("3rdrun_kout/output.txt","r")
-x=[]
-y_val_1 = []
-y_train_1 = []
-y_val_5 = []
-y_train_5 = []
-i=0
-firstline = True
-for line in file: #range(10000):
-    if len(line.split(" "))>2 and line.split(" ")[2] == "Training":
-        train_line = line
-        # print(i)
-        print(train_line)
-        train_accuracy_1 = float(train_line.split('Top1 = ')[-1].split(",")[0])
-        train_accuracy_5 = float(train_line.split('Top5 = ')[-1].split(",")[0])
-        Iter = int(train_line.split(" ")[1].strip(','))
-        x.append(Iter)
-        y_train_1.append(train_accuracy_1)
-        y_train_5.append(train_accuracy_5)
- 
-    if len(line.split(" "))>2 and line.split(" ")[2] == "Validation":
-        train_line = line
-        # print(i)
-        print(train_line)
-        train_accuracy_1 = float(train_line.split('Top1 = ')[-1].split(',')[0])
-        train_accuracy_5 = float(train_line.split('Top5 = ')[-1].split(',')[0])
-        y_val_1.append(train_accuracy_1)
-        y_val_5.append(train_accuracy_5)
- 
- 
-plt.plot(x, y_train_1, label = "Top 1 Training Accuracy")  
-plt.plot(x, y_val_1, label = "Top 1 Validation Accuracy")
-plt.plot( x, y_train_5, label = "Top 5 Training Accuracy")
-plt.plot(x, y_val_5, label  = "Top 5 Validation Accuracy")
+import json
+
+#Load error dictionaries
+with open("output/train_top1.json","r") as t1:
+    train1 = json.load(t1)
+with open("output/train_top5.json","r") as t5:
+    train5 = json.load(t5)
+
+with open("output/val_top1.json","r") as v1:
+    val1 = json.load(v1)
+with open("output/val_top5.json","r") as v5:
+    val5 = json.load(v5)
+
+train_top1 = [value for (key, value) in sorted(train1.items())]
+train_top5 = [value for (key, value) in sorted(train5.items())]
+
+val_top1 = [value for (key, value) in sorted(val1.items())]
+val_top5 = [value for (key, value) in sorted(val5.items())]
+
+x = arange(1, 11)
+plt.plot(x, train_top1, label = "Top-1 Training Error")  
+plt.plot(x, val_top1, label = "Top-1 Validation Error")
+plt.plot(x, train_top5, label = "Top-5 Training Error")
+plt.plot(x, val_top5, label  = "Top-5 Validation Error")
 plt.legend()
 plt.show()

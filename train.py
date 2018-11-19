@@ -11,6 +11,8 @@ import dataset
 from models.AlexNet import *
 from models.ResNet import *
 
+import json
+
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
     with torch.no_grad():
@@ -25,27 +27,7 @@ def accuracy(output, target, topk=(1,)):
         for k in topk:
             correct_k = correct[:k].view(-1).float().sum(0)
             res.append(correct_k.mul_(100.0 / batch_size))
-    #print("RESS", res)
     return res
-
-
-# def acc1(data_loader, model, device):
-#     correct = 0
-#     total = 0
-#     with torch.no_grad():            
-#         for data in data_loader:
-#             inputs, labels = data
-#             inputs = inputs.to(device) #get the inputs and labels
-#             labels = labels.to(device)
-#             outputs = model(inputs)
-#             _, predicted = torch.max(outputs.data, 1)
-#             total += labels.size(0)
-#             correct += (predicted == labels).sum().item()
-
-#     acc = 100 * correct / total
-#     err = 1 - acc
-#     print('Accuracy of the network on the training data: %d %%' % (acc))
-#     return acc
 
 
 def validate(val_loader, model, criterion, device, epoch):
@@ -109,15 +91,10 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
         loss = criterion(outputs, labels)
 
         loss.backward()
-
         optimizer.step()
+
         running_loss += loss.item()
         acc1, acc5 = accuracy(outputs.data, labels.data, topk=(1, 5))
-        
-
-
-
-
         total_acc1 += acc1.item()
         total_acc5 += acc5.item()
 
@@ -140,8 +117,6 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #top-5 score, you check if the target label is one of your top 5 predictions (the 5 ones with the highest probabilities).
 
 #the top score is computed as the times a predicted label matched the target label, divided by the number of data-points evaluated.      
-    print("num_train_batches", num_train_batches)
-    print("inputs.size(0):", inputs.size(0))
     top1 = total_acc1/num_train_batches
     top5 = total_acc5/num_train_batches
 
@@ -169,6 +144,10 @@ def run():
 
     epoch = 1
     while epoch <= num_epochs:
+        train_t1 = dict()
+        train_t5 = dict()
+        val_t1 = dict()
+        val_t5 = dict()
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
         # running_loss = 0.0
@@ -195,6 +174,8 @@ def run():
         #             ))
         #         running_loss = 0.0
         #         gc.collect()
+
+
         print("Epoch: ", epoch)
 
         print("Training Top-1 Accuracy: ", train_top1)
@@ -203,6 +184,11 @@ def run():
         print("Validation Top-1 Accuracy: ", val_top1)
         print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
+
+        train_t1[epoch] = train_top1
+        train_t5[epoch] = train_top5
+        val_t1[epoch] = val_top1
+        val_t5[epoch] = val_top5
         gc.collect()
         # save after every epoch
         torch.save(model.state_dict(), "models/model.%d" % epoch)
@@ -210,20 +196,17 @@ def run():
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
        
-        # Training Set
-        # train_accuracy1 = acc1(train_loader, model, device)
-        # train_accuracy1 = accuracy(output, target, topk=(1,)):
-        # train_accuracy5 = acc5(train_loader, model, device)
-
-        # #Validation Set
-        # val_accuracy1 = acc1(val_loader, model, device)
-        # val_accuracy5 = acc5(val_loader, model, device)
-
-        
-
-
         gc.collect()
         epoch += 1
+
+    with open('output/train_top1.json', 'w') as out:
+        json.dump(train_t1)
+    with open('output/train_top5.json', 'w') as out:
+        json.dump(train_t5)
+    with open('output/val_top5.json', 'w') as out:
+        json.dump(val_t5)
+    with open('output/val_top1.json', 'w') as out:
+        json.dump(val_t1)
 
 print('Starting training')
 run()

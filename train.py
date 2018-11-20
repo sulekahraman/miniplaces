@@ -149,7 +149,7 @@ def run():
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_34()
+    model = resnet_50()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
@@ -200,7 +200,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/SGD_resnet_34_lr_1e-3.%d" % epoch)
+        torch.save(model.state_dict(), "models/SGD_resnet_50_lr_1e-3.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -211,9 +211,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/SGD_resnet_34_lr_1e-3/train_top5.json', 'w') as out2:
+    with open('output/SGD_resnet_50_lr_1e-3/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/SGD_resnet_34_lr_1e-3/val_top5.json', 'w') as out3:
+    with open('output/SGD_resnet_50_lr_1e-3/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

@@ -145,7 +145,7 @@ def run():
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_18()
+    model = resnet_50()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
@@ -157,8 +157,8 @@ def run():
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
-    optimizer = optim.SGD(model.parameters(), lr=0.1)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:x*0.1)
+    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9,weight_decay = 5e-4)  #since adam is faster, might be better for lower epochs 
+    #scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:x*0.1)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
@@ -175,8 +175,8 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-        if epoch == 20 or epoch == 25:
-            scheduler.step()
+        # if epoch == 20 or epoch == 25:
+        #     scheduler.step()
         #model.load_state_dict(torch.load("models/model." + str(epoch)))
         model = model.to(device)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)

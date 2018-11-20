@@ -161,7 +161,7 @@ def run():
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
-    optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=0)  #since adam is faster, might be better for lower epochs 
+    optimizer = optim.SGD(model.parameters(), lr=1e-3 )  # weight_decay=0 , since adam is faster, might be better for lower epochs 
     # scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
@@ -200,7 +200,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/adam_resnet_34_lr_1e-3.%d" % epoch)
+        torch.save(model.state_dict(), "models/SGD_resnet_34_lr_1e-3.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -211,9 +211,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/adam_resnet_34_lr_1e-3/train_top5.json', 'w') as out2:
+    with open('output/SGD_resnet_34_lr_1e-3/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/adam_resnet_34_lr_1e-3/val_top5.json', 'w') as out3:
+    with open('output/SGD_resnet_34_lr_1e-3/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

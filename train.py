@@ -84,10 +84,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     running_loss = 0.0
     loss_ep[epoch] = 0.0 
     for param_group in optimizer.param_groups:
-        if param_group['lr'] == 0:
-            param_group['lr'] = 0.1
         print('Current learning rate: ' + str(param_group['lr']))
-    # model.train() #comment this out if you're training sth new
+    model.train() #comment this out if you're training sth new
     
 
     for batch_num, (inputs, labels) in enumerate(train_loader, 1):
@@ -197,7 +195,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        # torch.save(model.state_dict(), "models/model.%d" % epoch)
+        torch.save(model.state_dict(), "models/SGD_SCHEDULER_model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here

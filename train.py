@@ -153,6 +153,7 @@ def run():
         val_t1 = dict()
         val_t5 = dict()
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
+        print("Finished training")
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
         # running_loss = 0.0
         # for param_group in optimizer.param_groups:

@@ -139,7 +139,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 def run():
     # Parameters
-    num_epochs = 40
+    num_epochs = 50
     output_period = 100
     batch_size = 100
 
@@ -200,7 +200,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/SGD_SCHEDULER_model.%d" % epoch)
+        torch.save(model.state_dict(), "models/SGD_SCHEDULER_withdecrease_model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here

@@ -1,3 +1,3 @@
 #!/bin/bash
-sh run_scheduler_train.sh | tee scheduler_file.txt
+sh run_train.sh | tee runner_lr.txt
 sudo shutdown -h now

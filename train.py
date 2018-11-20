@@ -130,20 +130,20 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 
     return (top1, top5)
 
-def adjust_learning_rate(optimizer, epoch):
+# def adjust_learning_rate(optimizer, epoch):
     
-    gamma = 2
-    #state['lr'] *= gamma
-    for param_group in optimizer.param_groups:
-        lr = param_group['lr']
-    lr = lr*gamma
-    for param_group in optimizer.param_groups:
-        param_group['lr'] = lr 
+#     gamma = 2
+#     #state['lr'] *= gamma
+#     for param_group in optimizer.param_groups:
+#         lr = param_group['lr']
+#     lr = lr*gamma
+#     for param_group in optimizer.param_groups:
+#         param_group['lr'] = lr 
 
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 10
     output_period = 100
     batch_size = 100
 
@@ -162,9 +162,7 @@ def run():
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
     optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4, momentum=0.9)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[20, 25], gamma=0.1)
-    # scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
-    #scheduler takes optimizer as arguemnt, scheduler.step()
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[6, 8], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
@@ -180,12 +178,8 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-
         # model.load_state_dict(torch.load("models/model." + str(epoch)))
-        # if epoch ==20 or epoch == 25:
-        #     scheduler.step()
         scheduler.step()
-        # model = model.to(device)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
@@ -202,7 +196,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/problem2/model.%d" % epoch)
+        torch.save(model.state_dict(), "models/exp5/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -213,9 +207,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/problem2/train_top5.json', 'w') as out2:
+    with open('output/exp5/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/problem2/val_top5.json', 'w') as out3:
+    with open('output/exp5/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

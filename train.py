@@ -139,7 +139,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 40
     output_period = 100
     batch_size = 100
 

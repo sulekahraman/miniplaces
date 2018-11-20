@@ -188,9 +188,9 @@ def run():
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
         print("Epoch: ", epoch)
-        print("Training Top-1 Accuracy: ", train_top1)
+        # print("Training Top-1 Accuracy: ", train_top1)
         print("Training Top-5 Accuracy: ", train_top5)
-        print("Validation Top-1 Accuracy: ", val_top1)
+        # print("Validation Top-1 Accuracy: ", val_top1)
         print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
         #save the errors

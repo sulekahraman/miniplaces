@@ -84,7 +84,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
         lr = param_group['lr']
-    # model.train() #comment this out if you're training sth new
+    model.train() #comment this out if you're training sth new
     
 
     for batch_num, (inputs, labels) in enumerate(train_loader, 1):
@@ -112,7 +112,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
                 acc1,
                 acc5
                 # total_acc1/num_train_batches,
-                # total_acc5/num_train_batches
+                # total_acc5/lnum_train_batches
                 ))
             # loss_ep[lr] += running_loss
 

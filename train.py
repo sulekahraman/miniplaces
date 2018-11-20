@@ -143,7 +143,7 @@ def adjust_learning_rate(optimizer, epoch):
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 10
+    num_epochs = 30
     output_period = 100
     batch_size = 100
 

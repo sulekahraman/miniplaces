@@ -12,7 +12,7 @@ from models.AlexNet import *
 from models.ResNet import *
 
 import json
-loss_ep = dict()
+# loss_ep = dict()
 #resnet 50 is better, problem1 do more epochs >30.
 
 def accuracy(output, target, topk=(1,)):
@@ -80,7 +80,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     total_acc1 = 0.0
     total_acc5 = 0.0
     running_loss = 0.0
-    loss_ep[epoch] = 0.0 
+    # loss_ep[epoch] = 0.0 
     for param_group in optimizer.param_groups:
         print('Current learning rate: ' + str(param_group['lr']))
         lr = param_group['lr']
@@ -114,7 +114,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
                 # total_acc1/num_train_batches,
                 # total_acc5/num_train_batches
                 ))
-            loss_ep[lr] += running_loss
+            # loss_ep[lr] += running_loss
 
             running_loss = 0.0
             gc.collect()
@@ -126,7 +126,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #the top score is computed as the times a predicted label matched the target label, divided by the number of data-points evaluated.      
     top1 = total_acc1*1.0/num_train_batches
     top5 = total_acc5*1.0/num_train_batches
-    loss_ep[epoch] = loss_ep[epoch]/num_train_batches
+    # loss_ep[epoch] = loss_ep[epoch]/num_train_batches
 
     return (top1, top5)
 
@@ -161,17 +161,17 @@ def run():
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
-    optimizer = optim.SGD(model.parameters(), lr=0.1)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
+    optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4)  #since adam is faster, might be better for lower epochs 
+    # scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
     #people use 0.9, safe value of momentum 
 
-    train_t1 = dict()
+    # train_t1 = dict()
     train_t5 = dict()
-    val_t1 = dict()
+    # val_t1 = dict()
     val_t5 = dict()
     
 
@@ -180,10 +180,9 @@ def run():
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
 
-        model.load_state_dict(torch.load("models/model." + str(epoch)))
-        if epoch ==20 or epoch == 25:
-            scheduler.step()
-        #model.load_state_dict(torch.load("models/model." + str(epoch)))
+        # model.load_state_dict(torch.load("models/model." + str(epoch)))
+        # if epoch ==20 or epoch == 25:
+        #     scheduler.step()
         model = model.to(device)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
@@ -195,13 +194,13 @@ def run():
         print("Validation Top-5 Accuracy: ", val_top5)
         print("--------------------------------")
         #save the errors
-        train_t1[epoch] = 100 - train_top1
+        # train_t1[epoch] = 100 - train_top1
         train_t5[epoch] = 100 - train_top5
-        val_t1[epoch] = 100 - val_top1
+        # val_t1[epoch] = 100 - val_top1
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/diff_lr/model.%d" % epoch)
+        torch.save(model.state_dict(), "models/lr_01/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -212,9 +211,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/dropout/train_top5.json', 'w') as out2:
+    with open('output/lr_01/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/val_top5.json', 'w') as out3:
+    with open('output/lr_01/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

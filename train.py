@@ -143,13 +143,13 @@ def adjust_learning_rate(optimizer, epoch):
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 10
     output_period = 100
     batch_size = 100
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_34()
+    model = alexnet()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)

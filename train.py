@@ -84,6 +84,8 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
     running_loss = 0.0
     loss_ep[epoch] = 0.0 
     for param_group in optimizer.param_groups:
+        if param_group['lr'] == 0:
+            param_group['lr'] = 0.1
         print('Current learning rate: ' + str(param_group['lr']))
     # model.train() #comment this out if you're training sth new
     

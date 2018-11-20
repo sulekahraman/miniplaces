@@ -143,7 +143,7 @@ def adjust_learning_rate(optimizer, epoch):
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 10
+    num_epochs = 30
     output_period = 100
     batch_size = 100
 
@@ -162,7 +162,7 @@ def run():
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
     optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4, momentum=0.9)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[7], gamma=0.1)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[20, 25], gamma=0.1)
     # scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1

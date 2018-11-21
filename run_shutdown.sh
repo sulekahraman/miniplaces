@@ -1,3 +1,3 @@
 #!/bin/bash
-sh run_scheduler_train.sh | tee scheduler_file.txt
+sh run_scheduler_train.sh | tee exp3_file.txt
 sudo shutdown -h now

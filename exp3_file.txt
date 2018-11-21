@@ -1,0 +1,20 @@
+Starting training
+Current learning rate: 0.1
+[1:0.10] loss: 4.415 acc1: 3.0000 acc5: 14.0000 
+[1:0.20] loss: 4.102 acc1: 7.0000 acc5: 27.0000 
+[1:0.30] loss: 3.931 acc1: 17.0000 acc5: 31.0000 
+[1:0.40] loss: 3.800 acc1: 10.0000 acc5: 40.0000 
+[1:0.50] loss: 3.691 acc1: 17.0000 acc5: 39.0000 
+[1:0.60] loss: 3.588 acc1: 16.0000 acc5: 41.0000 
+[1:0.70] loss: 3.529 acc1: 16.0000 acc5: 40.0000 
+[1:0.80] loss: 3.444 acc1: 17.0000 acc5: 42.0000 
+[1:0.90] loss: 3.392 acc1: 13.0000 acc5: 39.0000 
+[1:1.00] loss: 3.321 acc1: 18.0000 acc5: 49.0000 
+[1:1.00] loss: 3.400 acc1: 0.0000 acc5: 48.0000 
+Accuracies on validation set: Top-1: 17.66 Top-5: 44.18
+Epoch:  1
+Training Top-1 Accuracy:  12.156
+Training Top-5 Accuracy:  33.997
+Validation Top-1 Accuracy:  17.66
+Validation Top-5 Accuracy:  44.18
+--------------------------------

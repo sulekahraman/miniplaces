@@ -210,9 +210,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/experiment3.json', 'w') as out2:
+    with open('scheduler/experiment3.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/experiment3.json', 'w') as out3:
+    with open('scheduler/experiment3.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

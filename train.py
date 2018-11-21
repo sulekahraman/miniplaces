@@ -139,7 +139,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 50
     output_period = 100
     batch_size = 100
 
@@ -160,6 +160,7 @@ def run():
     optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9,weight_decay = 5e-4)  #since adam is faster, might be better for lower epochs 
     #scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:x*0.1)
     #scheduler takes optimizer as arguemnt, scheduler.step()
+    #scheduler = optim.
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
@@ -173,6 +174,10 @@ def run():
 
     epoch = 1
     while epoch <= num_epochs:
+
+        if epoch == 20 or epoch == 25:
+            for param_group in optimizer.param_group:
+                param_group['lr'] = param_group['lr'] * .2 
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
         # if epoch == 20 or epoch == 25:
@@ -195,7 +200,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/SGD_SCHEDULER_model.%d" % epoch)
+        torch.save(model.state_dict(), "models/SGD_SCHEDULER_withdecrease_model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here

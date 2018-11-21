@@ -171,9 +171,9 @@ def run():
     # Below is where you change parameters for running file
     # -------
     #-------
-    nameOfTrial = "Trial_5" # CHANGE TRIAL NAME HERE
+    nameOfTrial = "Trial_6" # CHANGE TRIAL NAME HERE
 
-    optimizer = optim.SGD(model.parameters(), lr=1e-1, weight_decay=5e-4,momentum=0.9)  #since adam is faster, might be better for lower epochs 
+    optimizer = optim.Adam(model.parameters(), lr=1e-3)  #since adam is faster, might be better for lower epochs 
     # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4

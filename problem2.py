@@ -85,7 +85,9 @@ def main():
             #writer.writeheader()
             for image_name in img_names:
                 image = load_image(test_data + '/' + image_name, device)
+
                 top5 = top_5(image, model)
+                print(top5)
                 txt.write("%s %s %s %s %s %s\n" % ('test/' + image_name, top5[0], top5[1], top5[2], top5[3], top5[4]))
     except IOError:
         print("I/O error")

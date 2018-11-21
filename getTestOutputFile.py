@@ -78,6 +78,16 @@ def validate(val_loader, model, criterion, device):
 
             running_loss += loss.item()
             acc1, acc5 = accuracy(outputs.data, labels.data, topk=(1, 5))
+            print("------")
+            print("acc1")
+            print(acc1)
+            print(acc1.item())
+            # print(torch.Tensor.item(acc1))
+
+            print("acc5")
+            print(acc5)
+            print(acc5.item())
+            # print(torch.Tensor.item(acc5))
             total_acc1 += acc1.item()
             total_acc5 += acc5.item()
 
@@ -98,7 +108,7 @@ def validate(val_loader, model, criterion, device):
     return (top1, top5)
    
 
-#val_top1, val_top5 = validate(val_loader, model, criterion, device)
+val_top1, val_top5 = validate(val_loader, model, criterion, device)
 def construct_transformer():
     """construct transformer for images"""
     mean = [0.45486851, 0.43632515, 0.40461355]
@@ -114,16 +124,15 @@ def construct_transformer():
 
 
 
-image = imread('data/test/999/00000001.jpg')
-transformer = construct_transformer()
-image = transformer(image)
-# TODO: change the shape of the image to (bsz, n_channel, h, w)
-# so that it can be fed into the model. You might want to use the view function.
-image = image.view(1,3,128,128) 
-image = image.to(device)
-_, cls = torch.max(prediction, dim=1)
+# image = imread('data/test/999/00000001.jpg')
+# transformer = construct_transformer()
+# image = transformer(image)
+# # TODO: change the shape of the image to (bsz, n_channel, h, w)
+# # so that it can be fed into the model. You might want to use the view function.
+# image = image.view(1,3,128,128) 
+# image = image.to(device)
+# _, cls = torch.max(prediction, dim=1)
 
-print(model.get_feature(image))
 
 
 def getTestOutputFile():

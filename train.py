@@ -79,7 +79,7 @@ def validate(val_loader, model, criterion, device, epoch):
 def train(train_loader, model, criterion, optimizer, epoch, device):
 
     output_period = 100
-    batch_size = 50
+    batch_size = 100
     num_train_batches = len(train_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0

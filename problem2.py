@@ -15,7 +15,7 @@ from models.ResNet import *
 def load_model(model_name):
     """load the pre-trained model"""
     if model_name == 'ResNet':
-        model = resnet_50()
+        model = resnet_18()
     elif model_name == 'AlexNet':
         model = alexnet()
     else:
@@ -72,7 +72,7 @@ def main():
 
     test_data = 'data/test/999'
     img_names = []
-    for filename in os.listdir(testData_path):
+    for filename in os.listdir(test_data):
         img_names.append(filename)
     img_names.sort()
 

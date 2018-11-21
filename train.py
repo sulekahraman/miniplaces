@@ -147,7 +147,7 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 10
     output_period = 100
     batch_size = 50
 
@@ -174,7 +174,7 @@ def run():
     nameOfTrial = # CHANGE TRIAL NAME HERE
 
     optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4, momentum=0.9)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
+    # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 

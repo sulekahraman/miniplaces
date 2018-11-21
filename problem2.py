@@ -21,7 +21,7 @@ def load_model(model_name):
     else:
         raise NotImplementedError(model_name + ' is not implemented here')
 
-    trained_model = "Adam_resnet_34_lr_1e-3.1"
+    trained_model = "problem2/"
     model.load_state_dict(torch.load("models/" + trained_model, map_location='cpu'))
     return model
 

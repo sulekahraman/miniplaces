@@ -77,7 +77,7 @@ def main():
     img_names.sort()
 
     txt_file = 'test.txt'
-
+    print("Starting to classify images.")
     try:
         with open(txt_file, 'w') as txt:
             #writer = txt.DictWriter(textfile, fieldnames=None)
@@ -88,6 +88,5 @@ def main():
                 txt.write("%s %s %s %s %s %s\n" % ('test/' + image_name, top5[0], top5[1], top5[2], top5[3], top5[4]))
     except IOError:
         print("I/O error")
-
 
 main()

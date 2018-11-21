@@ -139,7 +139,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 def run():
     # Parameters
-    num_epochs = 50
+    num_epochs = 10
     output_period = 100
     batch_size = 100
 
@@ -157,7 +157,7 @@ def run():
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
-    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9,weight_decay = 5e-4)  #since adam is faster, might be better for lower epochs 
+    optimizer = optim.SGD(model.parameters(), lr=0.1,weight_decay = 5e-4)  #since adam is faster, might be better for lower epochs 
     #scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:x*0.1)
     #scheduler takes optimizer as arguemnt, scheduler.step()
     #scheduler = optim.
@@ -175,15 +175,15 @@ def run():
     epoch = 1
     while epoch <= num_epochs:
 
-        if epoch == 20 or epoch == 25:
-            for param_group in optimizer.param_group:
-                param_group['lr'] = param_group['lr'] * .2 
+#         if epoch == 20 or epoch == 25:
+#             for param_group in optimizer.param_group:
+#                 param_group['lr'] = param_group['lr'] * .2 
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
         # if epoch == 20 or epoch == 25:
         #     scheduler.step()
         #model.load_state_dict(torch.load("models/model." + str(epoch)))
-        model = model.to(device)
+        #model = model.to(device)
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
@@ -200,7 +200,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/SGD_SCHEDULER_withdecrease_model.%d" % epoch)
+        torch.save(model.state_dict(), "exp3models/exp3model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -210,9 +210,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('scheduler/train_top5.json', 'w') as out2:
+    with open('output/experiment3.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('scheduler/val_top5.json', 'w') as out3:
+    with open('output/experiment3.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

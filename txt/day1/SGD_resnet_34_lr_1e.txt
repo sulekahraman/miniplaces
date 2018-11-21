@@ -1,0 +1,171 @@
+Starting training
+Current learning rate: 0.001
+[1:0.10] loss: 4.725 acc1: 0.0000 acc5: 1.0000 
+[1:0.20] loss: 4.629 acc1: 2.0000 acc5: 8.0000 
+[1:0.30] loss: 4.599 acc1: 2.0000 acc5: 8.0000 
+[1:0.40] loss: 4.574 acc1: 2.0000 acc5: 10.0000 
+[1:0.50] loss: 4.556 acc1: 1.0000 acc5: 7.0000 
+[1:0.60] loss: 4.534 acc1: 1.0000 acc5: 20.0000 
+[1:0.70] loss: 4.524 acc1: 2.0000 acc5: 9.0000 
+[1:0.80] loss: 4.509 acc1: 3.0000 acc5: 12.0000 
+[1:0.90] loss: 4.496 acc1: 1.0000 acc5: 13.0000 
+[1:1.00] loss: 4.485 acc1: 4.0000 acc5: 14.0000 
+[1:1.00] loss: 4.478 acc1: 0.0000 acc5: 0.0000 
+Accuracies on validation set: Top-1: 2.52 Top-5: 10.99
+Epoch:  1
+Training Top-5 Accuracy:  8.283
+Validation Top-5 Accuracy:  10.99
+------------------ --------------
+Current learning rate: 0.001
+[2:0.10] loss: 4.477 acc1: 1.0000 acc5: 7.0000 
+[2:0.20] loss: 4.465 acc1: 3.0000 acc5: 9.0000 
+[2:0.30] loss: 4.463 acc1: 3.0000 acc5: 7.0000 
+[2:0.40] loss: 4.444 acc1: 4.0000 acc5: 13.0000 
+[2:0.50] loss: 4.442 acc1: 0.0000 acc5: 9.0000 
+[2:0.60] loss: 4.432 acc1: 2.0000 acc5: 8.0000 
+[2:0.70] loss: 4.420 acc1: 3.0000 acc5: 12.0000 
+[2:0.80] loss: 4.411 acc1: 2.0000 acc5: 8.0000 
+[2:0.90] loss: 4.409 acc1: 8.0000 acc5: 18.0000 
+[2:1.00] loss: 4.403 acc1: 6.0000 acc5: 14.0000 
+[2:1.00] loss: 4.401 acc1: 0.0000 acc5: 2.0000 
+Accuracies on validation set: Top-1: 3.07 Top-5: 12.75
+Epoch:  2
+Training Top-5 Accuracy:  11.638
+Validation Top-5 Accuracy:  12.75
+------------------ --------------
+Current learning rate: 0.001
+[3:0.10] loss: 4.399 acc1: 1.0000 acc5: 12.0000 
+[3:0.20] loss: 4.388 acc1: 1.0000 acc5: 12.0000 
+[3:0.30] loss: 4.380 acc1: 5.0000 acc5: 20.0000 
+[3:0.40] loss: 4.372 acc1: 5.0000 acc5: 16.0000 
+[3:0.50] loss: 4.374 acc1: 2.0000 acc5: 14.0000 
+[3:0.60] loss: 4.357 acc1: 4.0000 acc5: 20.0000 
+[3:0.70] loss: 4.354 acc1: 8.0000 acc5: 27.0000 
+[3:0.80] loss: 4.346 acc1: 6.0000 acc5: 11.0000 
+[3:0.90] loss: 4.344 acc1: 4.0000 acc5: 17.0000 
+[3:1.00] loss: 4.330 acc1: 3.0000 acc5: 15.0000 
+[3:1.00] loss: 4.323 acc1: 3.0000 acc5: 5.0000 
+Accuracies on validation set: Top-1: 4.36 Top-5: 16.4
+Epoch:  3
+Training Top-5 Accuracy:  14.413
+Validation Top-5 Accuracy:  16.4
+------------------ --------------
+Current learning rate: 0.001
+[4:0.10] loss: 4.324 acc1: 6.0000 acc5: 18.0000 
+[4:0.20] loss: 4.318 acc1: 7.0000 acc5: 16.0000 
+[4:0.30] loss: 4.311 acc1: 3.0000 acc5: 12.0000 
+[4:0.40] loss: 4.298 acc1: 7.0000 acc5: 17.0000 
+[4:0.50] loss: 4.298 acc1: 7.0000 acc5: 18.0000 
+[4:0.60] loss: 4.288 acc1: 8.0000 acc5: 19.0000 
+[4:0.70] loss: 4.275 acc1: 9.0000 acc5: 24.0000 
+[4:0.80] loss: 4.277 acc1: 4.0000 acc5: 15.0000 
+[4:0.90] loss: 4.266 acc1: 3.0000 acc5: 19.0000 
+[4:1.00] loss: 4.262 acc1: 1.0000 acc5: 18.0000 
+[4:1.00] loss: 4.249 acc1: 0.0000 acc5: 3.0000 
+Accuracies on validation set: Top-1: 5.38 Top-5: 19.38
+Epoch:  4
+Training Top-5 Accuracy:  17.503
+Validation Top-5 Accuracy:  19.38
+------------------ --------------
+Current learning rate: 0.001
+[5:0.10] loss: 4.251 acc1: 4.0000 acc5: 15.0000 
+[5:0.20] loss: 4.252 acc1: 7.0000 acc5: 23.0000 
+[5:0.30] loss: 4.240 acc1: 6.0000 acc5: 16.0000 
+[5:0.40] loss: 4.222 acc1: 4.0000 acc5: 22.0000 
+[5:0.50] loss: 4.215 acc1: 4.0000 acc5: 24.0000 
+[5:0.60] loss: 4.206 acc1: 5.0000 acc5: 26.0000 
+[5:0.70] loss: 4.181 acc1: 6.0000 acc5: 21.0000 
+[5:0.80] loss: 4.180 acc1: 3.0000 acc5: 22.0000 
+[5:0.90] loss: 4.175 acc1: 7.0000 acc5: 22.0000 
+[5:1.00] loss: 4.170 acc1: 9.0000 acc5: 22.0000 
+[5:1.00] loss: 4.155 acc1: 2.0000 acc5: 11.0000 
+Accuracies on validation set: Top-1: 6.75 Top-5: 22.3
+Epoch:  5
+Training Top-5 Accuracy:  20.629
+Validation Top-5 Accuracy:  22.3
+------------------ --------------
+Current learning rate: 0.001
+[6:0.10] loss: 4.146 acc1: 9.0000 acc5: 30.0000 
+[6:0.20] loss: 4.135 acc1: 8.0000 acc5: 20.0000 
+[6:0.30] loss: 4.142 acc1: 7.0000 acc5: 16.0000 
+[6:0.40] loss: 4.130 acc1: 5.0000 acc5: 21.0000 
+[6:0.50] loss: 4.107 acc1: 7.0000 acc5: 22.0000 
+[6:0.60] loss: 4.099 acc1: 10.0000 acc5: 23.0000 
+[6:0.70] loss: 4.099 acc1: 7.0000 acc5: 23.0000 
+[6:0.80] loss: 4.075 acc1: 11.0000 acc5: 21.0000 
+[6:0.90] loss: 4.066 acc1: 10.0000 acc5: 28.0000 
+[6:1.00] loss: 4.063 acc1: 8.0000 acc5: 27.0000 
+[6:1.00] loss: 4.061 acc1: 7.0000 acc5: 22.0000 
+Accuracies on validation set: Top-1: 7.77 Top-5: 24.6
+Epoch:  6
+Training Top-5 Accuracy:  23.559
+Validation Top-5 Accuracy:  24.6
+------------------ --------------
+Current learning rate: 0.001
+[7:0.10] loss: 4.061 acc1: 8.0000 acc5: 21.0000 
+[7:0.20] loss: 4.037 acc1: 6.0000 acc5: 23.0000 
+[7:0.30] loss: 4.026 acc1: 8.0000 acc5: 25.0000 
+[7:0.40] loss: 4.021 acc1: 7.0000 acc5: 20.0000 
+[7:0.50] loss: 4.022 acc1: 8.0000 acc5: 26.0000 
+[7:0.60] loss: 3.991 acc1: 7.0000 acc5: 20.0000 
+[7:0.70] loss: 3.998 acc1: 8.0000 acc5: 25.0000 
+[7:0.80] loss: 3.990 acc1: 6.0000 acc5: 27.0000 
+[7:0.90] loss: 3.982 acc1: 5.0000 acc5: 21.0000 
+[7:1.00] loss: 3.965 acc1: 10.0000 acc5: 33.0000 
+[7:1.00] loss: 3.988 acc1: 3.0000 acc5: 12.0000 
+Accuracies on validation set: Top-1: 8.97 Top-5: 26.8
+Epoch:  7
+Training Top-5 Accuracy:  25.982
+Validation Top-5 Accuracy:  26.8
+------------------ --------------
+Current learning rate: 0.001
+[8:0.10] loss: 3.949 acc1: 11.0000 acc5: 36.0000 
+[8:0.20] loss: 3.968 acc1: 5.0000 acc5: 27.0000 
+[8:0.30] loss: 3.960 acc1: 6.0000 acc5: 35.0000 
+[8:0.40] loss: 3.947 acc1: 12.0000 acc5: 28.0000 
+[8:0.50] loss: 3.954 acc1: 11.0000 acc5: 34.0000 
+[8:0.60] loss: 3.930 acc1: 10.0000 acc5: 26.0000 
+[8:0.70] loss: 3.911 acc1: 16.0000 acc5: 30.0000 
+[8:0.80] loss: 3.903 acc1: 10.0000 acc5: 33.0000 
+[8:0.90] loss: 3.910 acc1: 13.0000 acc5: 30.0000 
+[8:1.00] loss: 3.905 acc1: 3.0000 acc5: 31.0000 
+[8:1.00] loss: 3.890 acc1: 1.0000 acc5: 14.0000 
+Accuracies on validation set: Top-1: 9.54 Top-5: 29.48
+Epoch:  8
+Training Top-5 Accuracy:  28.084
+Validation Top-5 Accuracy:  29.48
+------------------ --------------
+Current learning rate: 0.001
+[9:0.10] loss: 3.894 acc1: 11.0000 acc5: 30.0000 
+[9:0.20] loss: 3.896 acc1: 9.0000 acc5: 26.0000 
+[9:0.30] loss: 3.879 acc1: 8.0000 acc5: 34.0000 
+[9:0.40] loss: 3.889 acc1: 10.0000 acc5: 25.0000 
+[9:0.50] loss: 3.870 acc1: 11.0000 acc5: 22.0000 
+[9:0.60] loss: 3.880 acc1: 9.0000 acc5: 29.0000 
+[9:0.70] loss: 3.870 acc1: 6.0000 acc5: 29.0000 
+[9:0.80] loss: 3.849 acc1: 9.0000 acc5: 30.0000 
+[9:0.90] loss: 3.874 acc1: 9.0000 acc5: 27.0000 
+[9:1.00] loss: 3.828 acc1: 10.0000 acc5: 30.0000 
+[9:1.00] loss: 3.900 acc1: 2.0000 acc5: 17.0000 
+Accuracies on validation set: Top-1: 9.8 Top-5: 29.58
+Epoch:  9
+Training Top-5 Accuracy:  29.969
+Validation Top-5 Accuracy:  29.58
+------------------ --------------
+Current learning rate: 0.001
+[10:0.10] loss: 3.834 acc1: 4.0000 acc5: 28.0000 
+[10:0.20] loss: 3.838 acc1: 17.0000 acc5: 38.0000 
+[10:0.30] loss: 3.824 acc1: 12.0000 acc5: 38.0000 
+[10:0.40] loss: 3.821 acc1: 9.0000 acc5: 29.0000 
+[10:0.50] loss: 3.809 acc1: 7.0000 acc5: 28.0000 
+[10:0.60] loss: 3.813 acc1: 15.0000 acc5: 29.0000 
+[10:0.70] loss: 3.812 acc1: 9.0000 acc5: 24.0000 
+[10:0.80] loss: 3.808 acc1: 13.0000 acc5: 30.0000 
+[10:0.90] loss: 3.792 acc1: 12.0000 acc5: 40.0000 
+[10:1.00] loss: 3.796 acc1: 7.0000 acc5: 27.0000 
+[10:1.00] loss: 3.771 acc1: 9.0000 acc5: 31.0000 
+Accuracies on validation set: Top-1: 11.55 Top-5: 33.57
+Epoch:  10
+Training Top-5 Accuracy:  31.731
+Validation Top-5 Accuracy:  33.57
+------------------ --------------

@@ -12,10 +12,12 @@ from models.AlexNet import *
 from models.ResNet import *
 
 import json
+import os
 # loss_ep = dict()
 #resnet 50 is better, problem1 do more epochs >30.
 
 
+nameOfTrial = ""
 
 def accuracy(output, target, topk=(1,)):
     """Computes the precision@k for the specified values of k"""
@@ -36,7 +38,7 @@ def accuracy(output, target, topk=(1,)):
 
 def validate(val_loader, model, criterion, device, epoch):
     output_period = 100
-    batch_size = 100    
+    batch_size = 50    
     num_val_batches = len(val_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -77,7 +79,7 @@ def validate(val_loader, model, criterion, device, epoch):
 def train(train_loader, model, criterion, optimizer, epoch, device):
 
     output_period = 100
-    batch_size = 100
+    batch_size = 50
     num_train_batches = len(train_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -132,26 +134,26 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 
     return (top1, top5)
 
-def adjust_learning_rate(optimizer, epoch):
+# def adjust_learning_rate(optimizer, epoch):
     
-    gamma = 2
-    #state['lr'] *= gamma
-    for param_group in optimizer.param_groups:
-        lr = param_group['lr']
-    lr = lr*gamma
-    for param_group in optimizer.param_groups:
-        param_group['lr'] = lr 
+#     gamma = 2
+#     #state['lr'] *= gamma
+#     for param_group in optimizer.param_groups:
+#         lr = param_group['lr']
+#     lr = lr*gamma
+#     for param_group in optimizer.param_groups:
+#         param_group['lr'] = lr 
 
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 10
+    num_epochs = 30
     output_period = 100
-    batch_size = 100
+    batch_size = 50
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_18()
+    model = resnet_50()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
@@ -163,9 +165,16 @@ def run():
 
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
-    optimizer = optim.SGD(model.parameters(), lr=1e-4,weight_decay =0)  # weight_decay=0 , since adam is faster, might be better for lower epochs 
-    # scheduler = optim.lr_scheduler.LambdaLR(optimizer,lambda x:0.1*x)
-    #scheduler takes optimizer as arguemnt, scheduler.step()
+
+    # --------
+    # -------
+    # Below is where you change parameters for running file
+    # -------
+    #-------
+    nameOfTrial = # CHANGE TRIAL NAME HERE
+
+    optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4, momentum=0.9)  #since adam is faster, might be better for lower epochs 
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
@@ -181,20 +190,20 @@ def run():
     while epoch <= num_epochs:
         # load pre-trained model
         # Comment out the following line if you're training sth new!!
-
         # model.load_state_dict(torch.load("models/model." + str(epoch)))
-        # if epoch ==20 or epoch == 25:
-        #     scheduler.step()
-        model = model.to(device)
+        scheduler.step()
         train_top1, train_top5 = train(train_loader, model, criterion, optimizer, epoch, device)
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
-        print("Epoch: ", epoch)
+        print("--------------------------------")
+        print("After Epoch: ", epoch)
         # print("Training Top-1 Accuracy: ", train_top1)
         print("Training Top-5 Accuracy: ", train_top5)
         # print("Validation Top-1 Accuracy: ", val_top1)
         print("Validation Top-5 Accuracy: ", val_top5)
-        print("------------------ --------------")
+        print("Training Top-5 Error: ", 100-train_top5)
+        print("Validation Top-5 Error: ", 100-val_top5)
+        print("--------------------------------")
         #save the errors
         # train_t1[epoch] = 100 - train_top1
         train_t5[epoch] = 100 - train_top5
@@ -202,7 +211,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/exp2.%d" % epoch)
+        torch.save(model.state_dict(), "models/"+nameOfTrial+"/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -210,12 +219,13 @@ def run():
         gc.collect()
         epoch += 1
 
-
+# Be sure to save
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/exp2/train_top5.json', 'w') as out2:
+    os.mkdir('json/'+nameOfTrial)
+    with open('json/'+nameOfTrial+'/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/exp2/val_top5.json', 'w') as out3:
+    with open('json/'+nameOfTrial+'/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)
@@ -224,4 +234,4 @@ def run():
 
 print('Starting training')
 run()
-print('Finished Training')
+print('Training terminated')

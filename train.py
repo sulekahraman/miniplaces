@@ -34,7 +34,7 @@ def accuracy(output, target, topk=(1,)):
 
 def validate(val_loader, model, criterion, device, epoch):
     output_period = 100
-    batch_size = 100    
+    batch_size = 50    
     num_val_batches = len(val_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -75,7 +75,7 @@ def validate(val_loader, model, criterion, device, epoch):
 def train(train_loader, model, criterion, optimizer, epoch, device):
 
     output_period = 100
-    batch_size = 100
+    batch_size = 50
     num_train_batches = len(train_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -145,7 +145,7 @@ def run():
     # Parameters
     num_epochs = 30
     output_period = 100
-    batch_size = 100
+    batch_size = 50
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

@@ -10,9 +10,9 @@ with open("output/default/train_top5.json","r") as t5:
     train5 = json.load(t5)
 with open("output/default/val_top5.json","r") as v5:
     val5 = json.load(v5)
-with open("output/exp1/val_top5.json","r") as v:
+with open("output/exp2/exp2val.json","r") as v:
     mod_val5 = json.load(v)
-with open("output/exp1/train_top5.json","r") as t:
+with open("output/exp2/exp2train.json","r") as t:
     mod_train5 = json.load(t)
 
 # train_top1 = [value for (key, value) in sorted(train1.items())]

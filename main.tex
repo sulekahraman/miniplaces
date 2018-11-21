@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\title{Miniplaces Part II}
+\author{Sule Kahraman\\
+        Collaborators: Jamarber Bakalli, William Dominguez}
+\date{November 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem 1 \textit{Improving NN Performance}}
+We implemented evaluating Top-1 Error (i.e. classification error)
+and Top-5 Error on the validation dataset. With the already provided neural architecture and the parameters, we got these results for accuracies of ResNet at 10th epoch:
+% Epoch:  10
+% Training Top-1 Accuracy:  11.37
+% Training Top-5 Accuracy:  32.357
+% Validation Top-1 Accuracy:  11.77
+% Validation Top-5 Accuracy:  32.98
+\begin{itemize}
+    \item Top-1 Error on Training Set: 88.6 \%
+    \item Top-5 Error on Training Set: 67.6 \%
+    \item Top-1 Error on Validation Set: 88.2 \%
+    \item Top-5 Error on Validation Set: 67.0 \%
+\end{itemize}
+
+Then, we tried to improve ResNet's performance using the techniques below.
+
+\subsection{Add Weight Decay and Change Learning Rate}
+Learning rate $\eta$ and weight decay are important parameters that help the network prevent from over-fitting or under-fitting. To investigate their effect, we modified the learning rate and added weight decay. We got below results with the given parameters:\\
+Experiment 1 is to observe the effect of increasing learning rate. \\
+Experiment 2 is to observe the effect of increasing learning rate more. \\
+Experiment 3 is to observe the effect of decreasing learning rate. \\
+Experiment 4 is to observe the effect of adding weight\_decay with the best suitable learning rate. \\
+\begin{itemize}
+    % \item \textbf{Experiment 1:} lr$=$0.01; weight\_decay$=$0; epoch$=$10; optimizer$=$SGD \\ 
+    % Top-5 Error on training data: \% \\
+    % Top-5 Error on validation data:\% \\
+    \item \textbf{Experiment 1:} lr$=$0.1 ; weight\_decay$=$0; epoch$=$10; optimizer$=$SGD \\
+    Top-5 Error on training data: \% \\
+    Top-5 Error on validation data:  \% \\
+    \item \textbf{Experiment 2:} lr$=$1e-4 ; weight\_decay$=$0; epoch$=$10; optimizer$=$SGD \\
+    Top-5 Error on training data: \% \\
+    Top-5 Error on validation data:  \% \\
+    \item \textbf{Experiment 3:} lr$=$0.1 ; weight\_decay$=$5e-4; epoch$=$10; optimizer$=$SGD \\
+    Top-5 Error on training data: \% \\
+    Top-5 Error on validation data:  \% \\
+\end{itemize}
+
+Following figures show the plot of top-5 error of the modified network in each experiment against the top-5 error of the original network for both the training and validation sets. \\
+% \begin{figure}[ht!]
+%     \centering
+%     \includegraphics[width=.9\textwidth]{}
+%     \caption{Experiment 1}
+%     \label{top5}
+% \end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.9\textwidth]{modified_lr01.png}
+    \caption{Experiment 1}
+    \label{exp1}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.9\textwidth]{exp2}
+    \caption{Experiment 2}
+    \label{exp2}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.9\textwidth]{exp3}
+    \caption{Experiment 3}
+    \label{exp3}
+\end{figure}
+
+
+When we decrease the learning rate, the gradient descent takes longer and accuracies get lower. This is because instead of finding the minimum loss, the gradient descent finds a local minimum, which results in a different classification. \\
+When we increase the learning rate, the gradient descent is faster and accuracies get lower. Due to the large learning rate, the gradient descent diverges and cannot find a local or global maximum as demonstrated in Figure \ref{}.
+
+% \begin{figure}[ht!]
+%     \centering
+%     \includegraphics[]{adamlr01.png}
+%     % \includegraphics{}
+%     \caption{The plot of top-5 error of our modified network in Experiment 3 against epochs }
+%     \label{adam}
+% \end{figure}
+
+
+
+
+\subsection{Change Optimizer/Add Scheduler}
+
+\begin{itemize}
+     \item \textbf{Experiment 4:} lr$=$0.1; weight\_decay$=$5e-4; epoch$=$10; optimizer$=$Adam; No scheduler \\ 
+    Top-5 Error on training data: \% \\
+    Top-5 Error on validation data:\% \\
+    
+    \item \textbf{Experiment 5:} lr$=$0.1; weight\_decay$=$5e-4;  epoch$=$10; optimizer$=$SGD; Multi-step scheduler with [6,8], gamma$=$0.1 \\
+    Top-5 Error on training data: 9.999 \% \\
+    Top-5 Error on validation data: 20.86 \% \\
+\end{itemize}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.9\textwidth]{exp4}
+    \caption{Experiment 4}
+    \label{exp4}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{exp5}
+    \caption{Experiment 5}
+    \label{exp5}
+\end{figure}
+
+
+\section{Problem 2 \textit{Miniplaces Challenge}}
+First of all, we use set the number of epoch to 30 to make sure we have enough examples to allow network to generalize well. We use an SGD optimizer with parameters of learning rate $=$ 0.1 and weight\_decay $=$ 5e-4. We chose the weight\_decay to be very small because we don't want the L2 regularizer to affect the results too much; we just want the to avoid overfitting by having it greater than 0. We also added a scheduler to decrease the learning rate as the epochs get closer to the end. Our multi-step scheduler changes the learning rate to 0.01 after epoch 20 and to 0.001 after epoch 25. This way, we can do faster gradient descent in the beginning to generalize well and then with lower learning rate, we can get more accurate (closer to the correct result) towards the end. We also set the momentum parameter of the optimizer to 0.9. Figure \ref{prob2} shows the accuracies we obtained using these hyper parameters on resnet18 architecture. The lowest validation error is at epoch 21 with a value around 18.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{problem2}
+    \caption{Experiment 5}
+    \label{prob2}
+\end{figure}
+
+Observing this graph, decided to implement early stopping to stop training at an epoch where accuracies are getting worse. We choose the model at the epoch with the highest accuracy. We also trained our final model using resnet50 architecture. 
+
+
+
+\end{document}

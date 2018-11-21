@@ -70,6 +70,7 @@ def main():
     # set image transformer
     transformer = construct_transformer()
 
+
     test_data = 'data/test/999'
     img_names = []
     for filename in os.listdir(test_data):

@@ -10,9 +10,9 @@ with open("output/default/train_top5.json","r") as t5:
     train5 = json.load(t5)
 with open("output/default/val_top5.json","r") as v5:
     val5 = json.load(v5)
-with open("output/exp2/exp2val.json","r") as v:
+with open("output/pr2_resnet18/val_top5.json","r") as v:
     mod_val5 = json.load(v)
-with open("output/exp2/exp2train.json","r") as t:
+with open("output/pr2_resnet18/train_top5.json","r") as t:
     mod_train5 = json.load(t)
 
 # train_top1 = [value for (key, value) in sorted(train1.items())]
@@ -27,12 +27,13 @@ mod_val_top5 = [value for (key, value) in sorted(mod_val5.items(), key=lambda x:
 x = range(1, len(mod_train_top5)+1)
 # plt.plot(x, train_top1, label = "Top-1 Training Error")  
 # plt.plot(x, val_top1, label = "Top-1 Validation Error")
-plt.plot(x, train_top5, label = "Training Err of Original")
-plt.plot(x, val_top5, label  = "Validation Err of Original")
+#plt.plot(x, train_top5, label = "Training Err of Original")
+#plt.plot(x, val_top5, label  = "Validation Err of Original")
 plt.plot(x, mod_train_top5, label = "Training Err of Modified")
 plt.plot(x, mod_val_top5, label  = "Validation Err of Modified")
 plt.xlabel("epoch")
 plt.ylabel("Top-5 Error (%)")
 plt.title("SGD Optimizer original:lr=1e-3, modified lr=0.1")
 plt.legend()
-plt.show()
+plt.savefig('final_plot')
+#plt.show()

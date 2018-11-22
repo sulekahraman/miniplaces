@@ -34,7 +34,7 @@ def accuracy(output, target, topk=(1,)):
 
 def validate(val_loader, model, criterion, device, epoch):
     output_period = 100
-    batch_size = 50    
+    batch_size = 100    
     num_val_batches = len(val_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -75,7 +75,7 @@ def validate(val_loader, model, criterion, device, epoch):
 def train(train_loader, model, criterion, optimizer, epoch, device):
 
     output_period = 100
-    batch_size = 50
+    batch_size = 100
     num_train_batches = len(train_loader)
     total_acc1 = 0.0
     total_acc5 = 0.0
@@ -143,13 +143,13 @@ def train(train_loader, model, criterion, optimizer, epoch, device):
 #scheduler, take optimizer as an argument scheduler.step() - drop the learning rate
 def run():
     # Parameters
-    num_epochs = 30
+    num_epochs = 15
     output_period = 100
-    batch_size = 50
+    batch_size = 100
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_50()
+    model = resnet_18()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
@@ -162,7 +162,7 @@ def run():
     # can input a weight decay argument here, shouldn't be very large since we have a large dataset , try (1e-3)
     # also try to change the learning rate  
     optimizer = optim.SGD(model.parameters(), lr=0.1, weight_decay=5e-4, momentum=0.9)  #since adam is faster, might be better for lower epochs 
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[7, 10], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
     #increase amount of epochs  to ~30 , 20 and 25 for dropping learing rate 
@@ -196,7 +196,7 @@ def run():
         val_t5[epoch] = 100 - val_top5
 
         # save after every epoch
-        torch.save(model.state_dict(), "models/pr2_resnet50/model.%d" % epoch)
+        torch.save(model.state_dict(), "models/pr2_resnet18/model.%d" % epoch)
 
         # TODO: Calculate classification error and Top-5 Error
         # on training and validation datasets here
@@ -207,9 +207,9 @@ def run():
 
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    with open('output/pr2_resnet50/train_top5.json', 'w') as out2:
+    with open('output/pr2_resnet18/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
-    with open('output/pr2_resnet50/val_top5.json', 'w') as out3:
+    with open('output/pr2_resnet18/val_top5.json', 'w') as out3:
         json.dump(val_t5, out3)
     # with open('output/dropout/val_top1.json', 'w') as out4:
     #     json.dump(val_t1, out4)

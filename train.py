@@ -13,6 +13,7 @@ from models.ResNet import *
 
 import json
 import os
+import datetime
 # loss_ep = dict()
 #resnet 50 is better, problem1 do more epochs >30.
 
@@ -153,7 +154,7 @@ def run():
 
     # setup the device for running
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = resnet_34()
+    model = resnet_18()
     model = model.to(device)
 
     train_loader, val_loader = dataset.get_data_loaders(batch_size)
@@ -171,9 +172,9 @@ def run():
     # Below is where you change parameters for running file
     # -------
     #-------
-    nameOfTrial = "Trial_5" # CHANGE TRIAL NAME HERE
+    nameOfTrial = "Trial_6" # CHANGE TRIAL NAME HERE
 
-    optimizer = optim.SGD(model.parameters(), lr=1e-3, weight_decay=5e-4,momentum=0.9)  #since adam is faster, might be better for lower epochs 
+    optimizer = optim.Adam(model.parameters(), lr=1e-3) #weight_decay=5e-4,momentum=0.9)  #since adam is faster, might be better for lower epochs 
     # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
     #5e-4 for weight decay, or 1e-4
@@ -196,6 +197,7 @@ def run():
         val_top1, val_top5 = validate(val_loader, model, criterion, device, epoch)
 #huh
         print("--------------------------------")
+        print(datetime.datetime.now())
         print("After Epoch: ", epoch)
         # print("Training Top-1 Accuracy: ", train_top1)
         print("Training Top-5 Accuracy: ", train_top5)

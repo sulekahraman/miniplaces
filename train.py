@@ -174,6 +174,9 @@ def run():
     #-------
     nameOfTrial = "Trial_6" # CHANGE TRIAL NAME HERE
 
+    os.mkdir('json/'+nameOfTrial)
+    os.mkdir('models/'+nameOfTrial)
+
     optimizer = optim.Adam(model.parameters(), lr=1e-3) #weight_decay=5e-4,momentum=0.9)  #since adam is faster, might be better for lower epochs 
     # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[19, 23], gamma=0.1)
     #simple multistep scheduler , 150 epochs, drop lr at 50, and 100,multiply lr by 0.1 , increase learning rate to something like 0.1
@@ -224,7 +227,6 @@ def run():
 # Be sure to save
     # with open('output/dropout/train_top1.json', 'w') as out1:
     #     json.dump(train_t1, out1)
-    os.mkdir('json/'+nameOfTrial)
     with open('json/'+nameOfTrial+'/train_top5.json', 'w') as out2:
         json.dump(train_t5, out2)
     with open('json/'+nameOfTrial+'/val_top5.json', 'w') as out3:
